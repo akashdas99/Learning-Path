@@ -51,15 +51,19 @@ const Content = () => {
               <span>{id}. </span>
               {question}
             </div>
-            <div className="cursor-pointer">
+            <div className="cursor-pointer mx-4">
               {answers.map((ans, index) => (
                 <div
                   key={index}
                   onClick={() => chooseAnswer(id - 1, ans)}
                   className={
-                    ans === answer[id - 1] ? "bg-indigo-500 text-slate-100" : ""
+                    ans === answer[id - 1]
+                      ? "bg-indigo-500 text-slate-100 rounded px-4  "
+                      : "rounded px-2 hover:decoration-indigo-500 hover:underline"
                   }
                 >
+                  {index + 1}
+                  {". "}
                   {ans}
                 </div>
               ))}
