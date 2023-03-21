@@ -15,7 +15,7 @@ const router = createBrowserRouter([
         element: <LearningPath />,
       },
       {
-        path: "/chapter",
+        path: "/chapter/:id",
         element: <Chapter />,
       },
     ],
