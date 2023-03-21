@@ -1,14 +1,14 @@
 const Score = ({ score, close }) => (
-  <div class=" fixed w-full h-full top-0 left-0 flex items-center justify-center">
+  <div className=" fixed w-full h-full top-0 left-0 flex items-center justify-center z-30">
     <div className="bg-indigo-500 opacity-50 w-full h-full absolute"></div>
-    <div class=" bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto opacity-100">
-      <div class="py-4 text-left px-6">
-        <div class="flex justify-between items-center pb-3">
-          <p class="text-2xl font-bold">You have Score : {score} %</p>
+    <div className=" bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto opacity-100">
+      <div className="py-4 text-left px-6">
+        <div className="flex justify-between items-center pb-3">
+          <p className="text-2xl font-bold">You have Score : {score} %</p>
 
-          <div class="cursor-pointer z-50" onClick={close}>
+          <div className="cursor-pointer z-50" onClick={close}>
             <svg
-              class="fill-current text-black"
+              className="fill-current text-black"
               xmlns="http://www.w3.org/2000/svg"
               width="18"
               height="18"

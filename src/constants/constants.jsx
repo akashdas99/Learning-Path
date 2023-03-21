@@ -2,6 +2,7 @@
 export const paths = [
   {
     id: 1,
+    slug: "dsa",
     title: "Data Structure & Algorithm",
     description:
       "A curated learning path for your journey to become proficient in Data Structure and Algorithm",
