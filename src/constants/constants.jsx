@@ -8,26 +8,586 @@ export const paths = [
     size: 8,
   },
 ];
-export const chapters = {
-  id: 1,
-  title: "Linked List, Queue and Stack-Data Structure & Algorithm Part I",
-  description:
-    '<h3>\n  <a name="learning-the-concepts-and-how-to-implement-linked-list-queue-and%C2%A0stack" href="#learning-the-concepts-and-how-to-implement-linked-list-queue-and%C2%A0stack" class="anchor">\n  </a>\n  Learning the concepts and how to implement Linked List, Queue and Stack.\n</h3>\n\n<p>Welcome to my first article where I am going to talk about Data Structures. I am so excited to be writing this series! I have been postponed this for a long time and many reasons, maybe I can write about it another time, but finally I decided to complete this goal.</p>\n\n<p>Here I will show how important this topic is and why you should understand all the concepts. In my point of view is important to know the concepts and how it works behind the scenes, although there are many frameworks that already have the complete implementation. But, trust me, it is essential for your career and maybe you may need it in the future to resolve some problem. 👨‍💻👩‍💻</p>\n\n<p>Here we are going to have a brief discussion with Javascript examples and I will start from the beginning, gradually, because we do not have to be hurry! So, let’s diving in this fantastic world called data structure and algorithms together. 😀</p>\n\n<p>💭 "Bad programmers worry about the code. Good programmers worry about data structures and their relationships." - Linus Torvalds</p>\n\n<h3>\n  <a name="outline" href="#outline" class="anchor">\n  </a>\n  Outline\n</h3>\n\n<ul>\n<li>Discussion about Singly, Doubly and Circular Linked List.</li>\n<li>What is a Queue and Stack?</li>\n<li>Terminology.</li>\n<li>When and where is used?</li>\n<li>Code implementation and complexity analysis.</li>\n</ul>\n\n<h3>\n  <a name="what-is-a-linked-list" href="#what-is-a-linked-list" class="anchor">\n  </a>\n  What is a Linked List?\n</h3>\n\n<p>Before we start to discuss, we need to formulate a clear understanding of what a linked list is. A collection structure represents a sequence of nodes. But, wait! ✋ What does node mean? 🤔  An object that contains value and pointer with reference to stores the address for the next element into the sequence of the list, as you can see in the following figure:</p>\n\n<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--dTKLdnEj--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/mt5yv6qjod33bd37cr0o.jpg" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--dTKLdnEj--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/mt5yv6qjod33bd37cr0o.jpg" alt="Alt Text" loading="lazy"></a></p>\n\n<h6>\n  <a name="figure-1-linked-list-representation" href="#figure-1-linked-list-representation" class="anchor">\n  </a>\n  <center>Figure 1: Linked List representation.</center>\n</h6>\n\n<p>Actually, you can imagine a pointer, as a place where you can find and obtain the stored value in the node, is a reference to a location in memory. The first node in the list represent a head and has a pointer to the next element, and as you can imagine the last node is the tail because has a null pointer to the next node.</p>\n\n<blockquote>\n<p> You also can use a pointer to the previous object. As a result, a Doubly Linked List type is created.</p>\n</blockquote>\n\n<p>Another important aspect to understand linked list is related to the efficient memory utilization. Is not necessary to pre-allocate memory, as a consequence you can add as much items you want in the list. However, some problems can show up if is required more memory than you can have, because each node has a pointer and other memory for itself.</p>\n\n<h3>\n  <a name="terminology" href="#terminology" class="anchor">\n  </a>\n  Terminology\n</h3>\n\n<p>As you can see in the image in the section above, we define two properties:</p>\n\n<ul>\n<li>value: Element that holds the data.</li>\n<li>next: Point to the next node.</li>\n</ul>\n\n<blockquote>\n<ul>\n<li>prev (optional): Can be used to point to the previous node. You can see more about in Doubly Linked List Structure.</li>\n</ul>\n</blockquote>\n\n<h3>\n  <a name="lets-begin%C2%A0" href="#lets-begin%C2%A0" class="anchor">\n  </a>\n  Let\'s begin! \n</h3>\n\n<p>Now that we are on the same page with the concepts, let’s start the discussion more deeply about Linked List methods, translate the concepts into to our code, and finally implement our data structure. At the beginning, we are going to focus in the Linked List, because it is the most common and simplest data structure linear collection of data elements. <br>\n <br>\nLet\'s start to work! 😃</p>\n<h4>\n  <a name="singly-linked%C2%A0list" href="#singly-linked%C2%A0list" class="anchor">\n  </a>\n  ◼️ Singly Linked List\n</h4>\n\n<p>Is called as singly because a node only hold a reference to the next element of the sequence and you cannot access previous elements because it does not store any pointer or reference to the previous node, as you can see in the figure.</p>\n\n<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--9HBeoSKE--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/3gdakj5md6oqx1gyuv9l.jpg" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--9HBeoSKE--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/3gdakj5md6oqx1gyuv9l.jpg" alt="Alt Text" loading="lazy"></a></p>\n<h6>\n  <a name="figure-2-a-singly-linked-list-that-contain-an-element-and-a-pointer-to-the-next-node" href="#figure-2-a-singly-linked-list-that-contain-an-element-and-a-pointer-to-the-next-node" class="anchor">\n  </a>\n  <center>Figure 2: A singly linked list that contain an element and a pointer to the next node</center>\n</h6>\n\n<p>Before we describe the operations, we need to define the most important part in our code that will help us to build the linear list structure, the node class.<br>\n</p>\n\n<div class="highlight js-code-highlight">\n<pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">Node</span> <span class="p">{</span>\n   <span class="kd">constructor</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>\n      <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>\n      <span class="k">this</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="nx">next</span><span class="p">;</span>\n   <span class="p">}</span>\n<span class="p">}</span>\n</code></pre>\n<div class="highlight__panel js-actions-panel">\n<div class="highlight__panel-action js-fullscreen-code-action">\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>\n    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>\n</svg>\n\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>\n    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>\n</svg>\n\n</div>\n</div>\n</div>\n\n\n\n<p>Our main class only has a reference to the value and the next node, pretty simple, right? So, let’s move on and define the Linked List class, which has the head property that point to the first element into the list, other property we have to declared is the size, which give to us the number of nodes that exist into our list.<br>\n</p>\n\n<div class="highlight js-code-highlight">\n<pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">LinkedList</span> <span class="p">{</span>\n    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>\n       <span class="k">this</span><span class="p">.</span><span class="nx">head</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>\n       <span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>\n    <span class="p">}</span>\n<span class="p">}</span>\n</code></pre>\n<div class="highlight__panel js-actions-panel">\n<div class="highlight__panel-action js-fullscreen-code-action">\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>\n    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>\n</svg>\n\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>\n    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>\n</svg>\n\n</div>\n</div>\n</div>\n\n\n\n<p>Okay, continuing the discussion we have to add methods to our class. Let’s check out:</p>\n\n<ul>\n<li>\n<strong>addAtHead</strong>: Our first method is used to add a new element at the beginning of our data structure. This method has a constant running time (O(1)). But what does it mean? 🧐 It means that it takes the same amount of time to add a value in the list, is a constant time. In this case is necessary only to move one time to add a new element in the first position into the list. As result, we need to update only the current head that will be pointing to the new item that we are going to be creating. Here’s how it should be:\n</li>\n</ul>\n\n<div class="highlight js-code-highlight">\n<pre class="highlight javascript"><code><span class="nx">addAtHead</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>\n   <span class="k">if</span><span class="p">(</span><span class="nx">linkedList</span><span class="p">.</span><span class="nx">head</span><span class="p">){</span>\n      <span class="kd">var</span> <span class="nx">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Node</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">head</span> <span class="p">);</span>\n      <span class="k">this</span><span class="p">.</span><span class="nx">head</span> <span class="o">=</span> <span class="nx">newNode</span><span class="p">;</span>\n   <span class="p">}</span><span class="k">else</span><span class="p">{</span>\n      <span class="kd">var</span> <span class="nx">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Node</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>\n      <span class="k">this</span><span class="p">.</span><span class="nx">head</span> <span class="o">=</span> <span class="nx">newNode</span><span class="p">;</span>\n   <span class="p">}</span>\n   <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>\n<span class="p">}</span>\n</code></pre>\n<div class="highlight__panel js-actions-panel">\n<div class="highlight__panel-action js-fullscreen-code-action">\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>\n    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>\n</svg>\n\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>\n    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>\n</svg>\n\n</div>\n</div>\n</div>\n\n\n\n<ul>\n<li>\n<strong>removeAtHead</strong>: If we want remove one element from the head all we have to do is replace the head by the following element. Like the method before the constant running time is O(1).\n</li>\n</ul>\n\n<div class="highlight js-code-highlight">\n<pre class="highlight javascript"><code><span class="nx">removeAtHead</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>\n    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">head</span><span class="p">){</span>\n       <span class="kd">var</span> <span class="nx">newHead</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>\n       <span class="k">this</span><span class="p">.</span><span class="nx">head</span> <span class="o">=</span> <span class="nx">newHead</span><span class="p">;</span>\n       <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="o">--</span><span class="p">;</span>\n    <span class="p">}</span><span class="k">else</span><span class="p">{</span>\n       <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>\n    <span class="p">}</span>\n<span class="p">}</span>\n</code></pre>\n<div class="highlight__panel js-actions-panel">\n<div class="highlight__panel-action js-fullscreen-code-action">\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>\n    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>\n</svg>\n\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>\n    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>\n</svg>\n\n</div>\n</div>\n</div>\n\n\n\n<ul>\n<li>\n<strong>search</strong>: If we are looking for a specific item? Do not be hurry; we only need iterate the list until the end to find the element in the list. But imagine the following scenario: We have a list with 1000 items and we are looking for the 999 item. Can you guess what can happen? If we want to get some specific value or node at position N then we have to moving the pointer throw the entire list to find it. This can cause a problem with the access time.\n</li>\n</ul>\n\n<div class="highlight js-code-highlight">\n<pre class="highlight javascript"><code>    <span class="nx">search</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>\n        <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">head</span><span class="p">){</span>\n            <span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">head</span><span class="p">;</span>\n            <span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>\n            <span class="k">while</span><span class="p">(</span><span class="nx">node</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">value</span> <span class="o">!=</span> <span class="nx">value</span><span class="p">){</span>\n                <span class="k">if</span><span class="p">(</span><span class="nx">count</span> <span class="o">&gt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">value</span> <span class="o">!=</span> <span class="nx">value</span><span class="p">){</span>\n                    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>\n                <span class="p">}</span>\n                <span class="nx">node</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>\n                <span class="nx">count</span><span class="o">++</span><span class="p">;</span>\n            <span class="p">}</span>\n            <span class="k">if</span><span class="p">(</span><span class="nx">node</span> <span class="o">==</span> <span class="kc">null</span><span class="p">){</span>\n                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>\n            <span class="p">}</span><span class="k">else</span><span class="p">{</span>\n                <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>\n            <span class="p">}</span>\n        <span class="p">}</span><span class="k">else</span><span class="p">{</span>\n            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>\n        <span class="p">}</span>\n    <span class="p">}</span>\n</code></pre>\n<div class="highlight__panel js-actions-panel">\n<div class="highlight__panel-action js-fullscreen-code-action">\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>\n    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>\n</svg>\n\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>\n    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>\n</svg>\n\n</div>\n</div>\n</div>\n\n\n\n<p>There are others functions like <strong>getAtIndex</strong>, <strong>addAtIndex</strong>, <strong>removeAt</strong> and <strong>reverse</strong> that I would like to discuss, but they have similar logic applies as the previous methods described before, so I’ll skip the explanation of them to not waste your time.</p>\n\n<blockquote>\n<p>⚡️ But if you would like to know how I implemented, you can access all the code just clicking <a href="https://github.com/FernandoBLima/data-structures">here</a>. <br>\n__</p>\n</blockquote>\n\n<h4>\n  <a name="doubly-linked%C2%A0list" href="#doubly-linked%C2%A0list" class="anchor">\n  </a>\n  ◼️ Doubly Linked List\n</h4>\n\n<p>As I mentioned earlier, the Doubly Linked List is a structure that has capacity to pointer to the previous node, which is the biggest difference comparing with the Singly List. Now we gain the power to move traversed backward in the list. For instance, each node has a pointer to the previous element, allowing you to move through the list from the tail, as show in the picture below.</p>\n\n<p>As Uncle Ben said to Peter Parker, “with great power comes great responsibility”. As consequence, is required more space to store the addresses of previous elements instead just one to the next element in list, so takes two more memory comparing with the singly structure.</p>\n\n<p>Besides that, mostly all functions and behaviors are quite similar with the Singly List. With basic understanding of Linked List, it is so easy to build and extend functionality to make it a Double List. So easy, right? 😁 You can feeling that we are having progress. 💪</p>\n\n<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--C39QuLRw--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/98yyqanvz90fabcn7ilc.jpg" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--C39QuLRw--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/98yyqanvz90fabcn7ilc.jpg" alt="Alt Text" loading="lazy"></a></p>\n\n<h6>\n  <a name="figure-3-a-doubly-linked-list-with-pointer-to-the-previous-element" href="#figure-3-a-doubly-linked-list-with-pointer-to-the-previous-element" class="anchor">\n  </a>\n  <center>Figure 3: A doubly linked list with pointer to the previous element</center>\n</h6>\n\n<p>Even though the behavior is similar, we need to update the Singly List functions such as <strong>addAtHead</strong>, <strong>removeAtHead</strong>, <strong>search</strong> and others to consider the previous property. Besides these functions, we have new weapons to use here, as you can see below:</p>\n\n<ul>\n<li>\n<strong>addAtTail</strong>: We define a new element at the bottom of the list and point the last element as the tail. Can you imagine the constant running time?\n</li>\n</ul>\n\n<div class="highlight js-code-highlight">\n<pre class="highlight javascript"><code>    <span class="nx">addAtTail</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>\n        <span class="kd">var</span> <span class="nx">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Node</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">);</span>\n        <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">){</span>\n            <span class="k">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="nx">newNode</span><span class="p">;</span>\n            <span class="k">this</span><span class="p">.</span><span class="nx">tail</span> <span class="o">=</span> <span class="nx">newNode</span><span class="p">;</span>\n        <span class="p">}</span><span class="k">else</span><span class="p">{</span>\n            <span class="k">this</span><span class="p">.</span><span class="nx">head</span> <span class="o">=</span> <span class="nx">newNode</span><span class="p">;</span>\n            <span class="k">this</span><span class="p">.</span><span class="nx">tail</span> <span class="o">=</span> <span class="nx">newNode</span><span class="p">;</span>\n        <span class="p">}</span>\n        <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>\n    <span class="p">}</span>\n</code></pre>\n<div class="highlight__panel js-actions-panel">\n<div class="highlight__panel-action js-fullscreen-code-action">\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>\n    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>\n</svg>\n\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>\n    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>\n</svg>\n\n</div>\n</div>\n</div>\n\n\n\n<ul>\n<li>\n<strong>removeAtTail</strong>: Here the last item from the list is set to the null value. As a result, the final element become the previous element of the last element.\n</li>\n</ul>\n\n<div class="highlight js-code-highlight">\n<pre class="highlight javascript"><code>    <span class="nx">removeAtTail</span><span class="p">(){</span>\n        <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">1</span><span class="p">){</span>\n            <span class="k">this</span><span class="p">.</span><span class="nx">removeAtHead</span><span class="p">();</span>\n            <span class="k">this</span><span class="p">.</span><span class="nx">tail</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>\n            <span class="k">return</span><span class="p">;</span>\n        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">){</span>\n            <span class="k">this</span><span class="p">.</span><span class="nx">tail</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">.</span><span class="nx">prev</span><span class="p">;</span>\n            <span class="k">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>\n            <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="o">--</span><span class="p">;</span>\n            <span class="k">return</span><span class="p">;</span>\n        <span class="p">}</span>\n        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>\n    <span class="p">}</span>\n</code></pre>\n<div class="highlight__panel js-actions-panel">\n<div class="highlight__panel-action js-fullscreen-code-action">\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-on"><title>Enter fullscreen mode</title>\n    <path d="M16 3h6v6h-2V5h-4V3zM2 3h6v2H4v4H2V3zm18 16v-4h2v6h-6v-2h4zM4 19h4v2H2v-6h2v4z"></path>\n</svg>\n\n    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewbox="0 0 24 24" class="highlight-action crayons-icon highlight-action--fullscreen-off"><title>Exit fullscreen mode</title>\n    <path d="M18 7h4v2h-6V3h2v4zM8 9H2V7h4V3h2v6zm10 8v4h-2v-6h6v2h-4zM8 15v6H6v-4H2v-2h6z"></path>\n</svg>\n\n</div>\n</div>\n</div>\n\n\n\n<h4>\n  <a name="circular-linked%C2%A0list" href="#circular-linked%C2%A0list" class="anchor">\n  </a>\n  ◼️ Circular Linked List\n</h4>\n\n<p>The only difference between the doubly Linked List is the fact that the tail element is linked with the first element in the list. As a result, a loop was created and now we can move forward and back-forward into the entire list.</p>\n\n<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--_HKamqc2--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/hd8jlfhp09a7eijby075.jpg" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--_HKamqc2--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/hd8jlfhp09a7eijby075.jpg" alt="Alt Text" loading="lazy"></a></p>\n\n<h6>\n  <a name="figure-4-circular-linked-list-that-contain-a-link-between-the-first-and-last-element" href="#figure-4-circular-linked-list-that-contain-a-link-between-the-first-and-last-element" class="anchor">\n  </a>\n  <center>Figure 4: Circular linked list that contain a link between the first and last element.</center>\n</h6>\n\n<p>Now we will use the entire acknowledgement that we learned to implement two new data structure.</p>\n\n<h4>\n  <a name="queue" href="#queue" class="anchor">\n  </a>\n  ◼️ Queue\n</h4>\n\n<p>The First-In-First-Out (FIFO) is an example of a linear data structure where the first element added to the queue will be the first to be removed. For instance, you can visualize this behavior where you are in a queue in a store, bank or supermarket. </p>\n\n<p>🚶‍♂️🏦🚶‍♀️🚶‍♂️🚶‍♀️🚶‍♂️</p>\n\n<p>A new element is added to the end of the list by the enqueuer (addFromTail) function and removed from the top of the list using the dequeue (removeFromTail) function. You can see other people or find in a book referencing the queue as removing or poling method, for me I prefer only dequeue. Other common operation in this structure is the peek that return the item at the top of the stack as peek.</p>\n\n<p>However, when should I use these structure data? 🤔 It is suggested to use Queue when the order matter, like a queueing system for requests.</p>\n\n<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--I0yT4PbI--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/fmgyixedyr4xnuy3vgjg.png" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--I0yT4PbI--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/fmgyixedyr4xnuy3vgjg.png" alt="Alt Text" loading="lazy"></a></p>\n\n<h6>\n  <a name="figure-5-representation-of-a-queue" href="#figure-5-representation-of-a-queue" class="anchor">\n  </a>\n  <center>Figure 5: Representation of a Queue.</center>\n</h6>\n\n<h4>\n  <a name="stack" href="#stack" class="anchor">\n  </a>\n  ◼️ Stack\n</h4>\n\n<p>Known as LIFO (last in, first out) data structure, you can visualize understanding how it works making an analogy when a set of items is stacked on top of each other, creating a pile of books.</p>\n\n<p>Like I said before, this structure has some similarities from Linked List and you can use addFromTail (Push) and removeFromTail (Pop) operations in your stack structure. Just like a queue, the operation that return an item at the top of the stack is called as peek.</p>\n\n<p>You can find this structure in mechanisms in text editors, compiler syntax checking or also on a graph.</p>\n\n<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--Bk-uCo3j--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/l802rd6482odvyp7qvjw.png" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--Bk-uCo3j--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/l802rd6482odvyp7qvjw.png" alt="Alt Text" loading="lazy"></a></p>\n\n<h6>\n  <a name="figure-6-a-representation-of-a-stack-and-the-push-and-pop-functions" href="#figure-6-a-representation-of-a-stack-and-the-push-and-pop-functions" class="anchor">\n  </a>\n  <center>Figure 6: A representation of a stack and the Push and Pop functions.</center>\n</h6>\n\n\n<hr>\n\n<h4>\n  <a name="time-complexity" href="#time-complexity" class="anchor">\n  </a>\n  ◼️ Time Complexity\n</h4>\n\n<p>You can see the time complexity in the image below, where n is the length of Linked List.</p>\n\n<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--yp0ZR04c--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/99u1y27olrgqexnulq8m.png" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--yp0ZR04c--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/99u1y27olrgqexnulq8m.png" alt="Alt Text" loading="lazy"></a></p>\n\n<h6>\n  <a name="figure-7-the-time-complexity" href="#figure-7-the-time-complexity" class="anchor">\n  </a>\n  <center>Figure 7: The time complexity.</center>\n</h6>\n\n<p>Let’s create an example by adding some values in the head and then removing in a Linked List using addAtHead and removeAtHead functions. In addition, using the time() object in Javascript will allowed us to time and analyzes the performance of our code, as the follow figure:</p>\n\n<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--Jy1gNYms--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/xytlcgb5w0bswfern2br.png" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--Jy1gNYms--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/xytlcgb5w0bswfern2br.png" alt="Alt Text" loading="lazy"></a></p>\n\n<h6>\n  <a name="figure-8-output-after-insert-and-remove-some-values-in-the-singly-linked-list" href="#figure-8-output-after-insert-and-remove-some-values-in-the-singly-linked-list" class="anchor">\n  </a>\n  <center>Figure 8: Output after insert and remove some values in the Singly Linked List.</center>\n</h6>\n\n<p>As you can see, we add some values in the list that show us how faster it is. Seeing the values we can realize that the execution time become a constant. The image below show the plot using Python with the Panda DataFrame library.</p>\n\n<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--h-NAio7w--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/cm793kn3w5u72upq05fy.png" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--h-NAio7w--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/cm793kn3w5u72upq05fy.png" alt="Alt Text" loading="lazy"></a></p>\n\n<h6>\n  <a name="figure-9-the-consume-time-between-addathead-and-removeathead-functions" href="#figure-9-the-consume-time-between-addathead-and-removeathead-functions" class="anchor">\n  </a>\n  <center>Figure 9:  The consume time between addAtHead and removeAtHead functions.</center>\n</h6>\n\n<p>We are done 🙌</p>\n\n<h4>\n  <a name="and-thats-it" href="#and-thats-it" class="anchor">\n  </a>\n  ◼️ And that\'s it!\n</h4>\n\n<p>To sum up our brief discussion, we have learnt that the Linked List is a simplest and dynamic data structure that can be used to implement others structures such as Queue and Stack.</p>\n\n<p>You can use these structures to perform a huge amount of insertion and deletion of items. It run fast by the fact that we need update only the next pointer in the node. However, if we want to get some specific value or node at position N, a problem with access time may occur if the size of the list is longer.</p>\n\n<p>Other important factor is the efficient memory utilization, it not necessary to pre-allocate memory. Nevertheless, in case you need more space, a problem related to a contiguous block of memory can occur.</p>\n\n<p>That\'s all folks!</p>\n\n<p>Code: <a href="https://github.com/FernandoBLima/data-structures">https://github.com/FernandoBLima/data-structures</a></p>\n\n<p>| next ( coming soon) &gt;</p>\n\n\n<hr>\n\n<p><em>So we finished our discussion about Linked List, Queue and Stack data structure.</em> 🙌</p>\n\n<p><em>I hope you have a clear idea how to work. If you found this article helpful, or if you find something I miss out or that you like it, feel free to let me know and subscribe!.</em> 😁</p>\n\n',
-  additionalLinks: [
-    "https://www.educative.io/answers/how-to-implement-stack-and-queue-using-linked-list",
-    "https://www.geeksforgeeks.org/data-structures/linked-list/",
-  ],
-  exercise: [
-    {
-      id: 1,
-      question:
-        " What is the time complexity to count the number of elements in the linked list?",
-      answers: {
-        a: "O(1)",
-        b: "O(n)",
-        c: "O(logn)",
-        d: "O(n^2)",
+export const chapters = [
+  {
+    id: 1,
+    title: "Linked List, Queue and Stack",
+    description: (
+      <p>
+        <b>What is a Linked List?</b> <br /> Before we start to discuss, we need
+        to formulate a clear understanding of what a linked list is. A
+        collection structure represents a sequence of nodes. But, wait! ✋ What
+        does node mean? 🤔 An object that contains value and pointer with
+        reference to stores the address for the next element into the sequence
+        of the list. Actually, you can imagine a pointer, as a place where you
+        can find and obtain the stored value in the node, is a reference to a
+        location in memory. The first node in the list represent a head and has
+        a pointer to the next element, and as you can imagine the last node is
+        the tail because has a null pointer to the next node. You also can use a
+        pointer to the previous object. As a result, a Doubly Linked List type
+        is created. Another important aspect to understand linked list is
+        related to the efficient memory utilization. Is not necessary to
+        pre-allocate memory, as a consequence you can add as much items you want
+        in the list. However, some problems can show up if is required more
+        memory than you can have, because each node has a pointer and other
+        memory for itself.
+        <br />
+        <b>Terminology</b>
+        <br />
+        As you can see in the image in the section above, we define two
+        properties: value: Element that holds the data. next: Point to the next
+        node. prev (optional): Can be used to point to the previous node. You
+        can see more about in Doubly Linked List Structure. Let's begin! Now
+        that we are on the same page with the concepts, let’s start the
+        discussion more deeply about Linked List methods, translate the concepts
+        into to our code, and finally implement our data structure. At the
+        beginning, we are going to focus in the Linked List, because it is the
+        most common and simplest data structure linear collection of data
+        elements. Let's start to work! 😃
+        <br />
+        <b>Singly Linked List</b>
+        <br />
+        Is called as singly because a node only hold a reference to the next
+        element of the sequence and you cannot access previous elements because
+        it does not store any pointer or reference to the previous node.
+        <br />
+        Stack
+        <br /> Known as LIFO (last in, first out) data structure, you can
+        visualize understanding how it works making an analogy when a set of
+        items is stacked on top of each other, creating a pile of books. Like I
+        said before, this structure has some similarities from Linked List and
+        you can use addFromTail (Push) and removeFromTail (Pop) operations in
+        your stack structure. Just like a queue, the operation that return an
+        item at the top of the stack is called as peek. Queue The
+        First-In-First-Out (FIFO) is an example of a linear data structure where
+        the first element added to the queue will be the first to be removed.
+        For instance, you can visualize this behavior where you are in a queue
+        in a store, bank or supermarket. 🚶‍♂️🏦🚶‍♀️🚶‍♂️🚶‍♀️🚶‍♂️ A new element is added to
+        the end of the list by the enqueuer (addFromTail) function and removed
+        from the top of the list using the dequeue (removeFromTail) function.
+        You can see other people or find in a book referencing the queue as
+        removing or poling method, for me I prefer only dequeue. Other common
+        operation in this structure is the peek that return the item at the top
+        of the stack as peek. However, when should I use these structure data?
+        🤔 It is suggested to use Queue when the order matter, like a queueing
+        system for requests.
+      </p>
+    ),
+    videoUrl: "https://www.youtube.com/watch?v=BnZLGy3g8y4&ab_channel=SCALER",
+    additionalLinks: [
+      "https://www.educative.io/answers/how-to-implement-stack-and-queue-using-linked-list",
+      "https://www.geeksforgeeks.org/data-structures/linked-list/",
+    ],
+    mcqs: [
+      {
+        id: 1,
+        question:
+          " What is the time complexity to count the number of elements in the linked list?",
+        answers: ["O(1)", "O(n)", "O(logn)", "O(n^2)"],
+        correct: "O(n)",
       },
-    },
-  ],
-};
+      {
+        id: 2,
+        question:
+          "Process of inserting an element in stack is called ____________.",
+        answers: ["Create", "Push", "Evaluation", "Pop"],
+        correct: "Push",
+      },
+      {
+        id: 3,
+        question:
+          " Process of removing an element from stack is called __________",
+        answers: ["Create", "Push", "Evaluation", "Pop"],
+        correct: "Pop",
+      },
+      {
+        id: 4,
+        question: "A queue is a ?",
+        answers: [
+          "FIFO (First In First Out) list",
+          "LIFO (Last In First Out) list",
+          "Ordered array",
+          "Linear tree",
+        ],
+        correct: "FIFO (First In First Out) list",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Dictionary and HashTable ",
+    description: (
+      <p>
+        In the previous post, we had learned about linked list, queue and stack.
+        Now we will continue our journey and move on to covering the Dictionary
+        and HashMap data structure.
+        <br />
+        <b>Dictionary</b>
+        <br />
+        Dictionary, which some people prefer refer as map structure, is a
+        collections of pairs [key, value] of distinct elements that use a key to
+        find a value. A little bit confusing, right? I will try to explain in a
+        different way.
+        <br />
+        As the name suggest this structure is like a dictionary book, where we
+        can use as an example of being applied to a real-world when you search
+        and found a word followed by his definition. 📚 In our case, the word is
+        the key and the description is the value stored.
+        <br />
+        At first, you might be wondering if there is some way we can use what we
+        had learned in the last post and use the linked list to create this
+        structure, right? Of course! We can use but we have to adapt the
+        structure adding the key property because a linked list add a new
+        element at the beginning of the list, resulting in an O(1) complexity of
+        time. If we want to delete some value, we need to search the key and as
+        you can remember, is not so efficient.
+        <br />
+        <b>HashTable</b>
+        <br />
+        We dont need to be hurry about that! We can create a function to convert
+        the key in an integer to resolve and handle our problem. Then using the
+        hash value created we can use as an index in our array to avoid the
+        collisions and that is what makes the hash table particularly useful. Is
+        it confused? I will try to explain.
+        <br />
+        We need to keep in mind that the hash table is another approach to
+        implement the dictionary data structure and the difference between them
+        is by the fact how we can store and access data. Just remember that a
+        hash table is composed with two parts, an array and hash function.
+        <br />
+      </p>
+    ),
+    videoUrl: "https://youtu.be/sfWyugl4JWA",
+    additionalLinks: [
+      "https://learn.microsoft.com/en-us/dotnet/standard/collections/hashtable-and-dictionary-collection-types",
+      "https://stackoverflow.com/questions/2061222/what-is-the-true-difference-between-a-dictionary-and-a-hash-table",
+    ],
+    mcqs: [
+      {
+        id: 1,
+        question: "What is a hash table?",
+        answers: [
+          "A structure that maps values to keys",
+          "A structure that maps keys to values",
+          "A structure used for storage",
+          "A structure used to implement stack and queue",
+        ],
+        correct: "A structure that maps keys to values",
+      },
+      {
+        id: 2,
+        question: "Which of these about a dictionary is false?",
+        answers: [
+          "Dictionaries are mutable",
+          "Dictionaries aren't ordered",
+          "The values of a dictionary can be accessed using keys",
+          "The keys of a dictionary can be accessed using values",
+        ],
+        correct: "The keys of a dictionary can be accessed using values",
+      },
+      {
+        id: 3,
+        question:
+          "Hashing technique which allocates fixed number of buckets is classified as",
+        answers: [
+          "dynamic hashing",
+          "static hashing",
+          "external hashing",
+          "internal hashing",
+        ],
+        correct: "external hashing",
+      },
+      {
+        id: 4,
+        question:
+          "If several elements are competing for the same bucket in the hash table, what is it called?",
+        answers: [
+          "Diffusion",
+          "Replication",
+          "Collision",
+          "None of the mentioned",
+        ],
+        correct: "Collision",
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Set and MultiSet",
+    description: "Ok",
+    videoUrl: "https://youtu.be/PKE_Y9_gHMo",
+    additionalLinks: [
+      "https://learn.microsoft.com/en-us/dotnet/standard/collections/hashtable-and-dictionary-collection-types",
+      "https://stackoverflow.com/questions/2061222/what-is-the-true-difference-between-a-dictionary-and-a-hash-table",
+    ],
+    mcqs: [
+      {
+        id: 1,
+        question: "What is a hash table?",
+        answers: [
+          "A structure that maps values to keys",
+          "A structure that maps keys to values",
+          "A structure used for storage",
+          "A structure used to implement stack and queue",
+        ],
+        correct: "A structure that maps keys to values",
+      },
+      {
+        id: 2,
+        question: "Which of these about a dictionary is false?",
+        answers: [
+          "Dictionaries are mutable",
+          "Dictionaries aren't ordered",
+          "The values of a dictionary can be accessed using keys",
+          "The keys of a dictionary can be accessed using values",
+        ],
+        correct: "The keys of a dictionary can be accessed using values",
+      },
+      {
+        id: 3,
+        question:
+          "Hashing technique which allocates fixed number of buckets is classified as",
+        answers: [
+          "dynamic hashing",
+          "static hashing",
+          "external hashing",
+          "internal hashing",
+        ],
+        correct: "external hashing",
+      },
+      {
+        id: 4,
+        question:
+          "If several elements are competing for the same bucket in the hash table, what is it called?",
+        answers: [
+          "Diffusion",
+          "Replication",
+          "Collision",
+          "None of the mentioned",
+        ],
+        correct: "Collision",
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "Disjoint Set",
+    description: "Ok",
+    videoUrl: "https://youtu.be/3gbO7FDYNFQ",
+    additionalLinks: [
+      "https://learn.microsoft.com/en-us/dotnet/standard/collections/hashtable-and-dictionary-collection-types",
+      "https://stackoverflow.com/questions/2061222/what-is-the-true-difference-between-a-dictionary-and-a-hash-table",
+    ],
+    mcqs: [
+      {
+        id: 1,
+        question: "What is a hash table?",
+        answers: [
+          "A structure that maps values to keys",
+          "A structure that maps keys to values",
+          "A structure used for storage",
+          "A structure used to implement stack and queue",
+        ],
+        correct: "A structure that maps keys to values",
+      },
+      {
+        id: 2,
+        question: "Which of these about a dictionary is false?",
+        answers: [
+          "Dictionaries are mutable",
+          "Dictionaries aren't ordered",
+          "The values of a dictionary can be accessed using keys",
+          "The keys of a dictionary can be accessed using values",
+        ],
+        correct: "The keys of a dictionary can be accessed using values",
+      },
+      {
+        id: 3,
+        question:
+          "Hashing technique which allocates fixed number of buckets is classified as",
+        answers: [
+          "dynamic hashing",
+          "static hashing",
+          "external hashing",
+          "internal hashing",
+        ],
+        correct: "external hashing",
+      },
+      {
+        id: 4,
+        question:
+          "If several elements are competing for the same bucket in the hash table, what is it called?",
+        answers: [
+          "Diffusion",
+          "Replication",
+          "Collision",
+          "None of the mentioned",
+        ],
+        correct: "Collision",
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: "Tree",
+    description: (
+      <p>
+        A tree data structure is a hierarchical structure that is used to
+        represent and organize data in a way that is easy to navigate and
+        search. It is a collection of nodes that are connected by edges and has
+        a hierarchical relationship between the nodes. The topmost node of the
+        tree is called the root, and the nodes below it are called the child
+        nodes. Each node can have multiple child nodes, and these child nodes
+        can also have their own child nodes, forming a recursive structure.
+        <br />
+        The data in a tree are not stored in a sequential manner i.e, they are
+        not stored linearly. Instead, they are arranged on multiple levels or we
+        can say it is a hierarchical structure. For this reason, the tree is
+        considered to be a non-linear data structure.
+        <br />
+        <b>Binnary Tree</b>
+        <br />
+        Binnary Tree As the name suggests, a binary tree it is a tree whose
+        elements have at most 2 children, called left and right. Simple right?
+        We should keep in mind that every node is a representation of a subtree
+        itself. That said, a node can have two subtrees.
+        <br />
+        <b>Binnary Search Tree (BST)</b>
+        <br />
+        Binary Search Tree is a rooted binary tree and each node store a key and
+        can have two children like the binary tree. But what is the difference
+        between them? An important thing to remember is that the root element
+        must satisfy the property to be greater than all keys stored in the left
+        sub-tree, and not greater than all keys in the right sub-tree which
+        provides the efficient way of data sorting, searching and retriving.
+      </p>
+    ),
+    videoUrl: "https://youtu.be/I_JuQ5ayPmc",
+    additionalLinks: [
+      "https://learn.microsoft.com/en-us/dotnet/standard/collections/hashtable-and-dictionary-collection-types",
+      "https://stackoverflow.com/questions/2061222/what-is-the-true-difference-between-a-dictionary-and-a-hash-table",
+    ],
+    mcqs: [
+      {
+        id: 1,
+        question: "What is a hash table?",
+        answers: [
+          "A structure that maps values to keys",
+          "A structure that maps keys to values",
+          "A structure used for storage",
+          "A structure used to implement stack and queue",
+        ],
+        correct: "A structure that maps keys to values",
+      },
+      {
+        id: 2,
+        question: "Which of these about a dictionary is false?",
+        answers: [
+          "Dictionaries are mutable",
+          "Dictionaries aren't ordered",
+          "The values of a dictionary can be accessed using keys",
+          "The keys of a dictionary can be accessed using values",
+        ],
+        correct: "The keys of a dictionary can be accessed using values",
+      },
+      {
+        id: 3,
+        question:
+          "Hashing technique which allocates fixed number of buckets is classified as",
+        answers: [
+          "dynamic hashing",
+          "static hashing",
+          "external hashing",
+          "internal hashing",
+        ],
+        correct: "external hashing",
+      },
+      {
+        id: 4,
+        question:
+          "If several elements are competing for the same bucket in the hash table, what is it called?",
+        answers: [
+          "Diffusion",
+          "Replication",
+          "Collision",
+          "None of the mentioned",
+        ],
+        correct: "Collision",
+      },
+    ],
+  },
+  {
+    id: 6,
+    title: "Trie",
+    description: "Ok",
+    videoUrl: "https://youtu.be/zIjfhVPRZCg",
+    additionalLinks: [
+      "https://learn.microsoft.com/en-us/dotnet/standard/collections/hashtable-and-dictionary-collection-types",
+      "https://stackoverflow.com/questions/2061222/what-is-the-true-difference-between-a-dictionary-and-a-hash-table",
+    ],
+    mcqs: [
+      {
+        id: 1,
+        question: "What is a hash table?",
+        answers: [
+          "A structure that maps values to keys",
+          "A structure that maps keys to values",
+          "A structure used for storage",
+          "A structure used to implement stack and queue",
+        ],
+        correct: "A structure that maps keys to values",
+      },
+      {
+        id: 2,
+        question: "Which of these about a dictionary is false?",
+        answers: [
+          "Dictionaries are mutable",
+          "Dictionaries aren't ordered",
+          "The values of a dictionary can be accessed using keys",
+          "The keys of a dictionary can be accessed using values",
+        ],
+        correct: "The keys of a dictionary can be accessed using values",
+      },
+      {
+        id: 3,
+        question:
+          "Hashing technique which allocates fixed number of buckets is classified as",
+        answers: [
+          "dynamic hashing",
+          "static hashing",
+          "external hashing",
+          "internal hashing",
+        ],
+        correct: "external hashing",
+      },
+      {
+        id: 4,
+        question:
+          "If several elements are competing for the same bucket in the hash table, what is it called?",
+        answers: [
+          "Diffusion",
+          "Replication",
+          "Collision",
+          "None of the mentioned",
+        ],
+        correct: "Collision",
+      },
+    ],
+  },
+  {
+    id: 7,
+    title: "Heap",
+    description: "Ok",
+    videoUrl: "https://youtu.be/t0Cq6tVNRBA",
+    additionalLinks: [
+      "https://learn.microsoft.com/en-us/dotnet/standard/collections/hashtable-and-dictionary-collection-types",
+      "https://stackoverflow.com/questions/2061222/what-is-the-true-difference-between-a-dictionary-and-a-hash-table",
+    ],
+    mcqs: [
+      {
+        id: 1,
+        question: "What is a hash table?",
+        answers: [
+          "A structure that maps values to keys",
+          "A structure that maps keys to values",
+          "A structure used for storage",
+          "A structure used to implement stack and queue",
+        ],
+        correct: "A structure that maps keys to values",
+      },
+      {
+        id: 2,
+        question: "Which of these about a dictionary is false?",
+        answers: [
+          "Dictionaries are mutable",
+          "Dictionaries aren't ordered",
+          "The values of a dictionary can be accessed using keys",
+          "The keys of a dictionary can be accessed using values",
+        ],
+        correct: "The keys of a dictionary can be accessed using values",
+      },
+      {
+        id: 3,
+        question:
+          "Hashing technique which allocates fixed number of buckets is classified as",
+        answers: [
+          "dynamic hashing",
+          "static hashing",
+          "external hashing",
+          "internal hashing",
+        ],
+        correct: "external hashing",
+      },
+      {
+        id: 4,
+        question:
+          "If several elements are competing for the same bucket in the hash table, what is it called?",
+        answers: [
+          "Diffusion",
+          "Replication",
+          "Collision",
+          "None of the mentioned",
+        ],
+        correct: "Collision",
+      },
+    ],
+  },
+  {
+    id: 8,
+    title: "Graph",
+    description: "Ok",
+    videoUrl: "https://youtu.be/fv8aQxQ11kY",
+    additionalLinks: [
+      "https://learn.microsoft.com/en-us/dotnet/standard/collections/hashtable-and-dictionary-collection-types",
+      "https://stackoverflow.com/questions/2061222/what-is-the-true-difference-between-a-dictionary-and-a-hash-table",
+    ],
+    mcqs: [
+      {
+        id: 1,
+        question: "What is a hash table?",
+        answers: [
+          "A structure that maps values to keys",
+          "A structure that maps keys to values",
+          "A structure used for storage",
+          "A structure used to implement stack and queue",
+        ],
+        correct: "A structure that maps keys to values",
+      },
+      {
+        id: 2,
+        question: "Which of these about a dictionary is false?",
+        answers: [
+          "Dictionaries are mutable",
+          "Dictionaries aren't ordered",
+          "The values of a dictionary can be accessed using keys",
+          "The keys of a dictionary can be accessed using values",
+        ],
+        correct: "The keys of a dictionary can be accessed using values",
+      },
+      {
+        id: 3,
+        question:
+          "Hashing technique which allocates fixed number of buckets is classified as",
+        answers: [
+          "dynamic hashing",
+          "static hashing",
+          "external hashing",
+          "internal hashing",
+        ],
+        correct: "external hashing",
+      },
+      {
+        id: 4,
+        question:
+          "If several elements are competing for the same bucket in the hash table, what is it called?",
+        answers: [
+          "Diffusion",
+          "Replication",
+          "Collision",
+          "None of the mentioned",
+        ],
+        correct: "Collision",
+      },
+    ],
+  },
+];
