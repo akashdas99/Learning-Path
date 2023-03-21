@@ -2,7 +2,7 @@
 
 ## Quickstart
 
-First, clone the repository:
+Steps to get started:
 
 ```bash
 git clone https://github.com/akashdas99/Learning-Path.git learning-path
