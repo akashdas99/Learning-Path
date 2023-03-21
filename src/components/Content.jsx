@@ -4,8 +4,8 @@ import { chapters } from "../constants/constants";
 import ReactPlayer from "react-player";
 import Score from "./Score";
 
-const Content = () => {
-  const { id } = useParams();
+const Content = ({ showSideBar }) => {
+  const { slug, id } = useParams();
   const { title, description, videoUrl, additionalLinks, mcqs } =
     chapters[id - 1];
   const initalState = Array.from(Array(mcqs.length));
@@ -18,7 +18,6 @@ const Content = () => {
       i === index ? ans : prevAns
     );
     setAnswer(newState);
-    console.log(answer);
   };
 
   const handleSubmit = (e) => {
@@ -29,8 +28,27 @@ const Content = () => {
     setShowScore(true);
   };
   return (
-    <div className="p-4 w-[90%] mt-2 ml-[20%] bg-white text-zinc-800 rounded">
-      <div className="font-bold text-2xl pb-4">{title}</div>
+    <div className="px-8 md:px-16 pt-4 mt-2 md:ml-[26%] bg-white text-zinc-800 rounded">
+      <div className="flex font-bold text-2xl pb-4">
+        <div className="px-2 md:hidden" onClick={showSideBar}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-8"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+        </div>
+
+        {title}
+      </div>
       <div className="player-wrapper">
         <ReactPlayer
           className="react-player "
@@ -71,7 +89,7 @@ const Content = () => {
           </div>
         ))}
         <button
-          class="rounded-none text-indigo-500 font-semibold"
+          className="rounded-none text-indigo-500 font-semibold"
           onClick={handleSubmit}
         >
           Submit
