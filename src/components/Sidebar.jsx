@@ -26,7 +26,7 @@ const Sidebar = ({ slug, visible, hideSideBar, completed }) => {
       {chapters.map(({ id }) => (
         <NavLink
           to={`/${slug}/${id}`}
-          className={`p-2 w-full text-center text-xl rounded-lg ${
+          className={`p-2 w-full text-center text-xl rounded-lg mt-2 ${
             completed[id - 1] ? `bg-green-500` : ``
           }`}
           key={id}
