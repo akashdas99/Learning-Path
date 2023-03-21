@@ -19,8 +19,8 @@ const Score = ({ score, close }) => (
           </div>
         </div>
         <p>
-          {score <= 75
-            ? `Score more 75 % to complete the Chapter`
+          {score < 75
+            ? `Score 75 % or more to complete the Chapter`
             : `Congrats for Completing the Chapter`}
         </p>
       </div>

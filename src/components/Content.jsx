@@ -92,11 +92,11 @@ const Content = ({ showSideBar, completed, setCompleted }) => {
       <div className="py-4">{additionalLinks}</div>
       <section>
         <div className="font-bold text-xl ">
-          Exercise (Score more than 75% to complete this chapter)
+          Exercise (Score 75% or more to complete this chapter)
         </div>
         {mcqs.map(({ id, question, answers, correct }) => (
           <div key={id}>
-            <div>
+            <div className="pt-6">
               <span>{id}. </span>
               {question}
             </div>
