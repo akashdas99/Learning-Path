@@ -4,7 +4,7 @@ import { chapters } from "../constants/constants";
 import ReactPlayer from "react-player";
 import Score from "./Score";
 
-const Content = ({ showSideBar }) => {
+const Content = ({ showSideBar, completed, setCompleted }) => {
   const { slug, id } = useParams();
   const { title, description, videoUrl, additionalLinks, mcqs } =
     chapters[id - 1];
@@ -20,12 +20,22 @@ const Content = ({ showSideBar }) => {
     setAnswer(newState);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     let newScore = 0;
     for (let i = 0; i < answer.length; i++)
       if (answer[i] === mcqs[i].correct) newScore++;
     setScore(newScore);
     setShowScore(true);
+    if (100 * (newScore / answer.length) >= 50) updateCompletion();
+  };
+
+  const updateCompletion = () => {
+    if (!completed[id - 1]) {
+      const newlyCompleted = completed;
+      newlyCompleted[id - 1] = true;
+      setCompleted(newlyCompleted);
+      localStorage.setItem(slug, JSON.stringify(newlyCompleted));
+    }
   };
   return (
     <div className="px-8 md:px-16 pt-4 mt-2 md:ml-[26%] bg-white text-zinc-800 rounded">
@@ -47,7 +57,26 @@ const Content = ({ showSideBar }) => {
           </svg>
         </div>
 
-        {title}
+        <div className="flex justify-between items-center w-full">
+          <div>{title}</div>
+          {completed[id - 1] && (
+            <div className="text-sm flex">
+              Congrats for Completing
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+          )}
+        </div>
       </div>
       <div className="player-wrapper">
         <ReactPlayer
@@ -76,7 +105,7 @@ const Content = ({ showSideBar }) => {
                   onClick={() => chooseAnswer(id - 1, ans)}
                   className={
                     ans === answer[id - 1]
-                      ? "bg-indigo-500 text-slate-100 rounded px-4  "
+                      ? "bg-indigo-500 text-slate-100 rounded px-2  "
                       : "rounded px-2 hover:decoration-indigo-500 hover:underline"
                   }
                 >
