@@ -529,7 +529,7 @@ export const chapters = [
           "children of nodes are randomly ordered",
           "None of the mentioned",
         ],
-        correct: "each node stores the associated keys",
+        correct: "path from root to the leat yields the string",
       },
     ],
   },

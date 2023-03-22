@@ -23,7 +23,7 @@ const Chapter = () => {
   }, []);
 
   return (
-    <div className="px-8">
+    <div className="md:px-8">
       <Sidebar
         slug={slug}
         visible={sideBar}
