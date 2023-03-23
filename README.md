@@ -1,5 +1,12 @@
 # Learning-Path
 
+## Overview
+
+A React based application to that guides you on your journey to learn.
+
+## Live 
+https://learningpaths.netlify.app/
+
 ## Quickstart
 
 Steps to get started:
